@@ -143,7 +143,7 @@ NOTES:
  */
 int bitXor(int x, int y)
 {
-  return ~(~x & ~y) & ~(x & y);
+	return ~(~x & ~y) & ~(x & y);
 }
 /*
  * tmin - return minimum two's complement integer
@@ -153,7 +153,7 @@ int bitXor(int x, int y)
  */
 int tmin(void)
 {
-  return 1 << 31;
+	return 1 << 31;
 }
 // 2
 /*
@@ -165,7 +165,7 @@ int tmin(void)
  */
 int isTmax(int x)
 {
-  return !(x ^ (~(1 << 31)));
+	return !(x ^ (~(1 << 31)));
 }
 /*
  * allOddBits - return 1 if all odd-numbered bits in word set to 1
@@ -177,10 +177,10 @@ int isTmax(int x)
  */
 int allOddBits(int x)
 {
-  int num = 0xAA;
-  num = (num << 8) + num;
-  num = (num << 16) + num;
-  return !((x & num) ^ num);
+	int num = 0xAA;
+	num = (num << 8) + num;
+	num = (num << 16) + num;
+	return !((x & num) ^ num);
 }
 /*
  * negate - return -x
@@ -191,7 +191,7 @@ int allOddBits(int x)
  */
 int negate(int x)
 {
-  return ~x + 1;
+	return ~x + 1;
 }
 // 3
 /*
@@ -205,12 +205,12 @@ int negate(int x)
  */
 int isAsciiDigit(int x)
 {
-  int sign = 1 << 31;
-  int high = ~(sign | 0x39);
-  int low = ~0x30 + 1;
-  high = sign & (high + x) >> 31;
-  low = sign & (low + x) >> 31;
-  return !(high | low);
+	int sign = 1 << 31;
+	int high = ~(sign | 0x39);
+	int low = ~0x30 + 1;
+	high = sign & (high + x) >> 31;
+	low = sign & (low + x) >> 31;
+	return !(high | low);
 }
 /*
  * conditional - same as x ? y : z
@@ -221,9 +221,9 @@ int isAsciiDigit(int x)
  */
 int conditional(int x, int y, int z)
 {
-  x = !!x;
-  x = ~x + 1;
-  return (x & y) | (~x & z);
+	x = !!x;
+	x = ~x + 1;
+	return (x & y) | (~x & z);
 }
 /*
  * isLessOrEqual - if x <= y  then return 1, else return 0
@@ -234,10 +234,10 @@ int conditional(int x, int y, int z)
  */
 int isLessOrEqual(int x, int y)
 {
-  int sign = ((x & ~y) >> 31) & 1;
-  int mark = ~((x ^ y) >> 31);
-  int eq = !(x ^ y);
-  return sign | (((mark & ((x + ~y + 1)) >> 31) | eq) & 1);
+	int sign = ((x & ~y) >> 31) & 1;
+	int mark = ~((x ^ y) >> 31);
+	int eq = !(x ^ y);
+	return sign | (((mark & ((x + ~y + 1)) >> 31) | eq) & 1);
 }
 // 4
 /*
@@ -250,7 +250,7 @@ int isLessOrEqual(int x, int y)
  */
 int logicalNeg(int x)
 {
-  return ~(x | (~x + 1)) >> 31 & 1;
+	return ~(x | (~x + 1)) >> 31 & 1;
 }
 /* howManyBits - return the minimum number of bits required to represent x in
  *             two's complement
@@ -266,21 +266,21 @@ int logicalNeg(int x)
  */
 int howManyBits(int x)
 {
-  int sign = x >> 31;
-  x = (sign & ~x) | (~sign & x);
+	int sign = x >> 31;
+	x = (sign & ~x) | (~sign & x);
 
-  int b16 = !!(x >> 16) << 4;
-  x = x >> b16;
-  int b8 = !!(x >> 8) << 3;
-  x = x >> b8;
-  int b4 = !!(x >> 4) << 2;
-  x = x >> b4;
-  int b2 = !!(x >> 2) << 1;
-  x = x >> b2;
-  int b1 = !!(x >> 1);
-  x = x >> b1;
-  int b0 = x;
-  return b16 + b8 + b4 + b2 + b1 + b0 + 1;
+	int b16 = !!(x >> 16) << 4;
+	x = x >> b16;
+	int b8 = !!(x >> 8) << 3;
+	x = x >> b8;
+	int b4 = !!(x >> 4) << 2;
+	x = x >> b4;
+	int b2 = !!(x >> 2) << 1;
+	x = x >> b2;
+	int b1 = !!(x >> 1);
+	x = x >> b1;
+	int b0 = x;
+	return b16 + b8 + b4 + b2 + b1 + b0 + 1;
 }
 // float
 /*
@@ -296,17 +296,17 @@ int howManyBits(int x)
  */
 unsigned floatScale2(unsigned uf)
 {
-  int sign = uf & 0x80000000;
-  int exp = uf & 0x7F800000;
-  if (!exp)
-  {
-    uf = sign | (uf << 1);
-  }
-  else if (exp != 0x7F800000)
-  {
-    uf = uf + 0x800000; // bit23
-  }
-  return uf;
+	int sign = uf & 0x80000000;
+	int exp = uf & 0x7F800000;
+	if (!exp)
+	{
+		uf = sign | (uf << 1);
+	}
+	else if (exp != 0x7F800000)
+	{
+		uf = uf + 0x800000; // bit23
+	}
+	return uf;
 }
 /*
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
@@ -321,25 +321,26 @@ unsigned floatScale2(unsigned uf)
  *   Rating: 4
  */
 int floatFloat2Int(unsigned uf)
-{//can't pass? i use the code from others
-  unsigned exponent = ((uf & 0x7f800000) >> 23);
-  unsigned significand = 0x7fffff & uf;
-  unsigned bias = 1;
-  int E = exponent - ((1 << 7) - 1);
-  int mask = ~(uf >> 31) + 1;
-  if (exponent == 0xff) return 0x80000000u;
-  if (exponent == 0 || E < 0) return 0;
-  while (E > 0) {
-	bias = (bias << 1) | !!(significand & 0x400000);
-	significand = significand << 1;
-	bias = bias << 1;
-	--E;
-  }
-  // 处理溢出
-  if (bias == 0) {
-  	return 0x80000000u;
-  }
-  return ((mask & -1) | (~mask & 1)) * bias; 
+{ // can't pass? i use the code from others in macos
+  //  work in arch!
+	int  is_neg = uf  >>31;
+	int exp = (uf >>23) & 0xFF;
+	int fra = (uf&0x7FFFFF);
+	int bias = 127;
+	int len = 23;
+	if(exp == 0xFF || exp > bias + 31)
+		return 0x80000000;
+	if (exp >= bias)
+	{
+		int power = exp - bias;
+		if(power <= len)
+			fra = fra >>(len - power);
+		else
+			fra = fra << (power - len);
+		int val  = (1 << power) | fra;
+		return is_neg ? -val : val;
+	}
+	return 0;
 }
 /*
  * floatPower2 - Return bit-level equivalent of the expression 2.0^x
@@ -356,11 +357,11 @@ int floatFloat2Int(unsigned uf)
  */
 unsigned floatPower2(int x)
 {
-  int INF = 0xff << 23;
-  int exp = x + 127;
-  if (exp <= 0)
-    return 0;
-  if (exp >= 255)
-    return INF;
-  return exp << 23;
+	int INF = 0xff << 23;
+	int exp = x + 127;
+	if (exp <= 0)
+		return 0;
+	if (exp >= 255)
+		return INF;
+	return exp << 23;
 }
